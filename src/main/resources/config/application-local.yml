@@ -1,0 +1,82 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  jpa:
+    generate-ddl: false
+    show-sql: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    locations: classpath:db/migration
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2MB
+      max-file-size: 5MB
+      max-request-size: 10MB
+  mail:
+    host: smtp.gmail.com
+    username: ts02099661@gmail.com
+    password: yuiv ymjf jrgq aitq
+    port: 465
+    protocol: smtps
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 247464265015-astrh9vll11l22scpds7rdn6q8b8bbo7.apps.googleusercontent.com
+            client-secret: RZptmh1c6LEfNhYHDLqGLqAJ
+            scope: email, profile
+          facebook:
+            client-id: 4453217618039998
+            client-secret: 8b3ef3edaec63d2905c50decd3db471e
+            scope: email, public_profile
+          github:
+            client-id: 95162f0ca4fbb8236c3d
+            client-secret: c80297b73b6710455005bd5cfd4427fe7034b9ed
+            scope: user:email, read:user
+        provider:
+          facebook:
+            authorization-uri: https://www.facebook.com/v10.0/dialog/oauth
+            user-info-uri: https://graph.facebook.com/v10.0/me?fields=email,first_name,last_name,name
+
+  thymeleaf:
+    prefix: classpath:/mail-templates/
+    suffix: .html
+
+amazon:
+  aws:
+    access-key: ${AWS_ACCESS_KEY}
+    secret-key: ${AWS_SECRET_KEY}
+  s3:
+    bucket:
+      name: perfumeswebstorage
+
+recaptcha:
+  secret: 6Lc5cLkZAAAAANUjd4--Jx6PioSC_N-9MFKT3PsA
+  url: https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s
+
+hostname: localhost:3000
+
+jwt:
+  header: Authorization
+  secret: MHKmgafIOeCvrtBOC46YHlvUJBjwZ5RJBsuBnn6naVY=
+  expiration: 604800
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    com.gmail.merikbest2015.ecommerce.controller: DEBUG
+  root: DEBUG
