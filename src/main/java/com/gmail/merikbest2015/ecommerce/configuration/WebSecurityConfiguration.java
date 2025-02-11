@@ -4,6 +4,7 @@ import com.gmail.merikbest2015.ecommerce.security.oauth2.CustomOAuth2UserService
 import com.gmail.merikbest2015.ecommerce.security.JwtConfigurer;
 import com.gmail.merikbest2015.ecommerce.security.oauth2.OAuth2SuccessHandler;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,7 +27,8 @@ public class WebSecurityConfiguration {
     private final JwtConfigurer jwtConfigurer;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
     private final CustomOAuth2UserService oAuth2UserService;
-
+    @Value("${hostname}")
+    private String hostname;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -66,7 +68,7 @@ public class WebSecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("http://localhost:3000"); // 替換為 hostname 或其他允許的來源
+        configuration.addAllowedOrigin("http://" + hostname); // 替換為 hostname 或其他允許的來源
         configuration.addAllowedMethod("HEAD");
         configuration.addAllowedMethod("OPTIONS");
         configuration.addAllowedMethod("GET");

@@ -16,8 +16,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -35,11 +38,19 @@ public class GraphQLProvider {
 
     @PostConstruct
     public void loadSchema() throws IOException {
-        File fileSchema = resource.getFile();
-        TypeDefinitionRegistry typeRegistry = new SchemaParser().parse(fileSchema);
-        RuntimeWiring wiring = buildRuntimeWiring();
-        GraphQLSchema schema = new SchemaGenerator().makeExecutableSchema(typeRegistry, wiring);
-        graphQL = GraphQL.newGraphQL(schema).build();
+        // 使用 InputStreamReader 讀取 JAR 內部資源
+        try (InputStreamReader reader = new InputStreamReader(resource.getInputStream());
+             BufferedReader bufferedReader = new BufferedReader(reader)) {
+
+            // 讀取 GraphQL Schema 並解析
+            String schemaContent = bufferedReader.lines().collect(Collectors.joining("\n"));
+            TypeDefinitionRegistry typeRegistry = new SchemaParser().parse(schemaContent);
+            RuntimeWiring wiring = buildRuntimeWiring();
+            GraphQLSchema schema = new SchemaGenerator().makeExecutableSchema(typeRegistry, wiring);
+
+            // 初始化 GraphQL 物件
+            graphQL = GraphQL.newGraphQL(schema).build();
+        }
     }
 
     private RuntimeWiring buildRuntimeWiring() {

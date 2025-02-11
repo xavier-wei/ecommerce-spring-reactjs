@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: jdbc:postgresql://172.16.1.168:8092/kwc
+    username: ${DB_USERNAME_DOCKER}
+    password: ${DB_PASSWORD_DOCKER}
   jpa:
     generate-ddl: false
     show-sql: false
@@ -63,11 +63,11 @@ amazon:
 
 
 recaptcha:
-#  secret: 6Lc5cLkZAAAAANUjd4--Jx6PioSC_N-9MFKT3PsA
+#  site-key: 6LcUqdMqAAAAAP97EVgU61VkK0BPR4w2KHFTUC2d
   secret: 6LcUqdMqAAAAADPn8xP89cVliLg6CYum2v-jjUip
   url: https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s
 
-hostname: localhost:3000
+hostname: 172.16.1.168:1120
 
 jwt:
   header: Authorization
