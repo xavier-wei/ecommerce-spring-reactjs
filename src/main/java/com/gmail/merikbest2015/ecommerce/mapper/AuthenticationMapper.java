@@ -11,6 +11,7 @@ import com.gmail.merikbest2015.ecommerce.service.AuthenticationService;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
@@ -71,7 +72,7 @@ public class AuthenticationMapper {
 //        PasswordEncoder encoder = new BCryptPasswordEncoder();
 //
 //        // 模擬用戶輸入的密碼
-//        String rawPassword = "kwc@123456789";
+//        String rawPassword = "admin123";
 //
 //        // 測試加密和匹配
 //        String encodedPassword = encoder.encode(rawPassword);
@@ -82,9 +83,15 @@ public class AuthenticationMapper {
 //        System.out.println("Password match: " + isMatch);
 //    }
 
+//    public static void main(String[] args) {
+//        SecretKey key = Keys.secretKeyFor(io.jsonwebtoken.SignatureAlgorithm.HS256); // 生成符合 HS256 的密鑰
+//        String base64Key = Base64.getEncoder().encodeToString(key.getEncoded());
+//        System.out.println("Generated Key (Base64): " + base64Key);
+//    }
+
     public static void main(String[] args) {
-        SecretKey key = Keys.secretKeyFor(io.jsonwebtoken.SignatureAlgorithm.HS256); // 生成符合 HS256 的密鑰
-        String base64Key = Base64.getEncoder().encodeToString(key.getEncoded());
-        System.out.println("Generated Key (Base64): " + base64Key);
+        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        String encodedPassword = encoder.encode("admin123");
+        System.out.println(encodedPassword);
     }
 }

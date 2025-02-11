@@ -17,7 +17,10 @@ public class EcommerceApplication {
         System.setProperty("AWS_SECRET_KEY", dotenv.get("AWS_SECRET_KEY"));
         System.setProperty("DB_USERNAME", dotenv.get("DB_USERNAME"));
         System.setProperty("DB_PASSWORD", dotenv.get("DB_PASSWORD"));
-
+        System.out.println("AWS_ACCESS_KEY: " + System.getProperty("AWS_ACCESS_KEY"));
+        System.out.println("AWS_SECRET_KEY: " + System.getProperty("AWS_SECRET_KEY"));
+        System.out.println("DB_USERNAME: " + System.getProperty("DB_USERNAME"));
+        System.out.println("DB_PASSWORD: " + System.getProperty("DB_PASSWORD"));
         SpringApplication.run(EcommerceApplication.class, args);
     }
 

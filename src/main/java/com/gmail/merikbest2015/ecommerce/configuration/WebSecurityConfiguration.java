@@ -10,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -33,21 +34,22 @@ public class WebSecurityConfiguration {
                 .csrf(csrf -> csrf.disable()) // 暫時禁用 CSRF
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // 啟用 CORS 配置
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/v1/auth/**",
-                                "/api/v1/auth/login",
-                                "/api/v1/registration/**",
+                        // 公開 API 路徑，不需要驗證
+                        .requestMatchers(
+                                "/api/v1/auth/**",
                                 "/api/v1/perfumes/**",
                                 "/api/v1/users/**",
                                 "/api/v1/order/**",
-                                "/api/v1/review/**",
-                                "/api/v1/admin/**",
+                                "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**",
                                 "/websocket", "/websocket/**",
-                                "/img/**",
-                                "/static/**",
-                                "/auth/**", "/oauth2/**",
-                                "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll() // 公開 API 路徑
-                        .anyRequest().authenticated() // 其他請求需要驗證
-                );
+                                "/img/**", "/static/**",
+                                "/auth/**", "/oauth2/**"
+                        ).permitAll()
+                        // 其他所有請求需要身份驗證
+                        .anyRequest().authenticated()
+                )
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 使用無狀態會話
+                .apply(jwtConfigurer); // 添加 JWT 配置
         return http.build();
     }
 

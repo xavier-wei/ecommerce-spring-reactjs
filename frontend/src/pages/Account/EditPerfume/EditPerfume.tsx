@@ -115,7 +115,7 @@ const EditPerfume: FC = (): ReactElement => {
                             title={"Release year"}
                             titleSpan={6}
                             wrapperSpan={18}
-                            name={"year"}
+                            name={"perfume_year"}
                             error={errors.yearError}
                             disabled={isLoading}
                             placeholder={"Release year"}
@@ -131,7 +131,7 @@ const EditPerfume: FC = (): ReactElement => {
                         />
                         <EditPerfumeSelect
                             title={"Perfume type"}
-                            name={"type"}
+                            name={"perfume_type"}
                             placeholder={"Perfume type"}
                             error={errors.typeError}
                             disabled={isLoading}

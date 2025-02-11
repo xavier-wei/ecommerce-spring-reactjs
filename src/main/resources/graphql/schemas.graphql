@@ -16,7 +16,7 @@ type Perfume {
     id: Int
     perfumeTitle: String
     perfumer: String
-    year: Int
+    perfumeYear: Int
     country: String
     perfumeGender: String
     fragranceTopNotes: String
@@ -26,7 +26,7 @@ type Perfume {
     filename: String
     price: Int
     volume: String
-    type: String
+    perfumeType: String
     perfumeRating: Float
     reviews: [Review]
 }

@@ -28,7 +28,7 @@ public class Perfume {
     @Column(name = "perfumer")
     private String perfumer;
 
-    @Column(name = "year")
+    @Column(name = "perfume_year")
     private Integer year;
     
     @Column(name = "country")
@@ -58,7 +58,7 @@ public class Perfume {
     @Column(name = "volume")
     private String volume;
     
-    @Column(name = "type")
+    @Column(name = "perfume_type")
     private String type;
     
     @Column(name = "perfume_rating")

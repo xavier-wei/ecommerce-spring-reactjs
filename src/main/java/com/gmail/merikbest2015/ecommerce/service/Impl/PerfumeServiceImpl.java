@@ -36,13 +36,14 @@ import static com.gmail.merikbest2015.ecommerce.constants.ErrorMessage.PERFUME_N
 public class PerfumeServiceImpl implements PerfumeService {
 
     private final PerfumeRepository perfumeRepository;
+
     private final S3Client s3Client;
 
 
     @Value("${amazon.s3.bucket.name}")
     private String bucketName;
 
-    @Value("${amazon.aws.region:eu-central-1}") // 預設區域為 eu-central-1
+    @Value("${amazon.s3.region:eu-central-1}") // 預設區域為 eu-central-1
     private String awsRegion;
 
     @Override

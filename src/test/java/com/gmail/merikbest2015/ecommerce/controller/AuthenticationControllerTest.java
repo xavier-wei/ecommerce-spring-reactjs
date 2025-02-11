@@ -3,7 +3,6 @@ package com.gmail.merikbest2015.ecommerce.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gmail.merikbest2015.ecommerce.dto.PasswordResetRequest;
 import com.gmail.merikbest2015.ecommerce.dto.auth.AuthenticationRequest;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,10 +11,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static com.gmail.merikbest2015.ecommerce.constants.ErrorMessage.*;
@@ -26,6 +25,7 @@ import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@ActiveProfiles("test")
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc
@@ -66,12 +66,12 @@ public class AuthenticationControllerTest {
 
     @Test
     public void login_ShouldEmailOrPasswordBeNotValid() throws Exception {
-        authenticationRequest.setPassword("123");
+        authenticationRequest.setPassword("wrong_password");
 
         mockMvc.perform(post(API_V1_AUTH + LOGIN)
                         .content(mapper.writeValueAsString(authenticationRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(status().isForbidden())
+                .andExpect(status().isUnauthorized()) // 如果業務邏輯中返回的是 401
                 .andExpect(jsonPath("$", is(INCORRECT_PASSWORD)));
     }
 

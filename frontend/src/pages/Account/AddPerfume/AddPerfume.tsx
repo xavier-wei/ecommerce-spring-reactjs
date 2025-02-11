@@ -92,14 +92,14 @@ const AddPerfume: FC = (): ReactElement => {
                         />
                         <AddFormInput
                             title={"Release year"}
-                            name={"year"}
+                            name={"perfume_year"}
                             error={perfumeErrors.yearError}
                             placeholder={"Enter the release year"}
                             disabled={ispPerfumeLoading}
                         />
                         <AddFormSelect
                             title={"Perfume type"}
-                            name={"type"}
+                            name={"perfume_type"}
                             error={perfumeErrors.typeError}
                             placeholder={"Eau de Parfum"}
                             disabled={ispPerfumeLoading}

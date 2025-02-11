@@ -9,7 +9,7 @@ describe("AddFormSelect", () => {
         const wrapper = mountWithStore(
             <AddFormSelect
                 title={"Perfume type"}
-                name={"type"}
+                name={"perfume_type"}
                 error={"Fill in the input field"}
                 placeholder={"Eau de Parfum"}
                 disabled={false}
@@ -17,7 +17,7 @@ describe("AddFormSelect", () => {
             />
         );
         expect(wrapper.text().includes("Perfume type")).toBe(true);
-        expect(wrapper.find(Form.Item).prop("name")).toBe("type");
+        expect(wrapper.find(Form.Item).prop("name")).toBe("perfume_type");
         expect(wrapper.find(Form.Item).prop("help")).toBe("Fill in the input field");
     });
 });
