@@ -42,6 +42,8 @@ public class WebSecurityConfiguration {
                                 "/api/v1/perfumes/**",
                                 "/api/v1/users/**",
                                 "/api/v1/order/**",
+                                "/api/v1/review/**",
+                                "/api/v1/registration/**",
                                 "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**",
                                 "/websocket", "/websocket/**",
                                 "/img/**", "/static/**",

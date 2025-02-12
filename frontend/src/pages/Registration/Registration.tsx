@@ -98,16 +98,17 @@ const Registration: FC = (): ReactElement => {
                             inputPassword
                         />
                         <IconButton disabled={isLoading} title={"Sign up"} icon={<UserAddOutlined />} />
-                        <Form.Item
-                            help={errors.captchaError}
-                            validateStatus={errors.captchaError ? "error" : "validating"}
-                            style={{ marginTop: 16 }}
-                        >
-                            <ReCAPTCHA
-                                onChange={onChangeRecaptcha}
-                                sitekey="6LcUqdMqAAAAAP97EVgU61VkK0BPR4w2KHFTUC2d"
-                            />
-                        </Form.Item>
+                        {/*<Form.Item*/}
+                        {/*    help={errors.captchaError}*/}
+                        {/*    validateStatus={errors.captchaError ? "error" : "validating"}*/}
+                        {/*    style={{ marginTop: 16 }}*/}
+                        {/*>*/}
+                        {/*    <ReCAPTCHA*/}
+                        {/*        onChange={onChangeRecaptcha}*/}
+                        {/*        // sitekey="6LcUqdMqAAAAAP97EVgU61VkK0BPR4w2KHFTUC2d"*/}
+                        {/*        sitekey="6Le6btQqAAAAADOqhs4ObNcKrCDztwBjgHDly6HM"*/}
+                        {/*    />*/}
+                        {/*</Form.Item>*/}
                     </Form>
                 </Col>
             </Row>
