@@ -8,8 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-
-
 import static com.gmail.merikbest2015.ecommerce.constants.PathConstants.ACTIVATE_CODE;
 import static com.gmail.merikbest2015.ecommerce.constants.PathConstants.API_V1_REGISTRATION;
 
@@ -20,6 +18,9 @@ public class RegistrationController {
 
     private final AuthenticationMapper authenticationMapper;
 
+    /**
+     *  註冊api
+     * */
     @PostMapping
     public ResponseEntity<String> registration(@Valid @RequestBody RegistrationRequest user, BindingResult bindingResult) {
         return ResponseEntity.ok(authenticationMapper.registerUser(user.getCaptcha(), user, bindingResult));

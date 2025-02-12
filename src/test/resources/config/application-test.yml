@@ -67,10 +67,6 @@ amazon:
       access-key: test
       secret-key: test
 
-recaptcha:
-  secret: 6Lc5cLkZAAAAANUjd4--Jx6PioSC_N-9MFKT3PsA
-  url: https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s
-
 hostname: localhost:3000
 
 jwt:

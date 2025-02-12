@@ -62,11 +62,6 @@ amazon:
       secret-key: ${AWS_SECRET_KEY}
 
 
-recaptcha:
-#  site-key: 6LcUqdMqAAAAAP97EVgU61VkK0BPR4w2KHFTUC2d
-  secret: 6LcUqdMqAAAAADPn8xP89cVliLg6CYum2v-jjUip
-  url: https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s
-
 hostname: 172.16.1.168:1120
 
 jwt:

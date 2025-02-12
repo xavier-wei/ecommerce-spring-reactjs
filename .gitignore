@@ -33,3 +33,6 @@ build/
 .vscode/
 
 .env
+
+META-INF/MANIFEST.MF
+ecommerce-app.tar

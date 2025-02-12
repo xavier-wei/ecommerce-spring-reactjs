@@ -21,7 +21,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -43,20 +42,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private static final Logger logger = LoggerFactory.getLogger(AuthenticationServiceImpl.class);
 
     private final AuthenticationManager authenticationManager;
-    private final RestTemplate restTemplate;
     private final JwtProvider jwtProvider;
     private final EmailSenderService mailSender;
-//    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
     @Value("${hostname}")
     private String hostname;
-
-    @Value("${recaptcha.secret}")
-    private String secret;
-
-    @Value("${recaptcha.url}")
-    private String captchaUrl;
 
     @Override
     public Map<String, Object> login(String email, String password) {
@@ -96,8 +87,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     @Transactional
     public String registerUser(User user, String captcha, String password2) {
-        String url = String.format(captchaUrl, secret, captcha);
-        restTemplate.postForObject(url, Collections.emptyList(), CaptchaResponse.class);
+//        String url = String.format(captchaUrl, secret, captcha);
+//        restTemplate.postForObject(url, Collections.emptyList(), CaptchaResponse.class);
 
         if (user.getPassword() != null && !user.getPassword().equals(password2)) {
             throw new PasswordException(PASSWORDS_DO_NOT_MATCH);
@@ -112,7 +103,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setActivationCode(UUID.randomUUID().toString());
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         user.setPassword(encoder.encode(user.getPassword()));
-        System.out.println("Encoded password222222: " + encoder.encode(user.getPassword()));
         userRepository.save(user);
 
         sendEmail(user, "Activation code", "registration-template", "registrationUrl", "/activate/" + user.getActivationCode());
@@ -173,7 +163,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         user.setPassword(encoder.encode(password));
 
-        System.out.println("Encoded password11111: " + encoder.encode(password));
         user.setPasswordResetCode(null);
         userRepository.save(user);
         return "Password successfully changed!";
