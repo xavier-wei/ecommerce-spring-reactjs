@@ -62,7 +62,7 @@ amazon:
       secret-key: ${AWS_SECRET_KEY}
 
 
-hostname: localhost:3000
+app_hostname: localhost:3000
 
 jwt:
   header: Authorization

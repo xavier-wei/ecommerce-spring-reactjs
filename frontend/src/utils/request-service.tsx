@@ -26,17 +26,19 @@ const createRequest = (method: Method, url: string, body: any, isAuthRequired: b
         method: method,
         url: API_BASE_URL + url,
         data: body,
-        headers: setHeader(isAuthRequired, contentType)
+        headers: setHeader(isAuthRequired, contentType) || {}
     });
 };
 
 const setHeader = (isAuthRequired: boolean, contentType: string) => {
-    if (isAuthRequired) {
-        axios.defaults.headers.common["Authorization"] = localStorage.getItem("token");
-    } else {
-        delete axios.defaults.headers.common["Authorization"];
+    let headers: any = { "Content-Type": contentType };
+
+    const token = localStorage.getItem("token");
+    if (isAuthRequired && token) {
+        headers["Authorization"] = `Bearer ${token}`; // 確保格式正確
     }
-    axios.defaults.headers.common["Content-Type"] = contentType;
+
+    return headers;
 };
 
 export default new RequestService();

@@ -46,7 +46,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final EmailSenderService mailSender;
     private final UserRepository userRepository;
 
-    @Value("${hostname}")
+    @Value("${app_hostname}")
     private String hostname;
 
     @Override

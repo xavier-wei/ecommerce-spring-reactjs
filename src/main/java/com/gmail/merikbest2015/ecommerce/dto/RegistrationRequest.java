@@ -12,9 +12,6 @@ import static com.gmail.merikbest2015.ecommerce.constants.ErrorMessage.*;
 @Data
 public class RegistrationRequest {
 
-    @NotBlank(message = "Fill captcha.")
-    private String captcha;
-
     @NotBlank(message = EMPTY_FIRST_NAME)
     private String firstName;
 

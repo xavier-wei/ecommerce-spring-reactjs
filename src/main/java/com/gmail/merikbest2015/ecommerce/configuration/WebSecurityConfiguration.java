@@ -11,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,18 +26,17 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class WebSecurityConfiguration {
 
     private final JwtConfigurer jwtConfigurer;
-    private final OAuth2SuccessHandler oAuth2SuccessHandler;
-    private final CustomOAuth2UserService oAuth2UserService;
-    @Value("${hostname}")
-    private String hostname;
+    //    private final OAuth2SuccessHandler oAuth2SuccessHandler;
+//    private final CustomOAuth2UserService oAuth2UserService;
+    @Value("${app_hostname}")
+    private String app_hostname;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // 暫時禁用 CSRF
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // 啟用 CORS 配置
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // 確保 CORS 設定生效
+                .csrf(AbstractHttpConfigurer::disable) // 禁用 CSRF
                 .authorizeHttpRequests(authorize -> authorize
-                        // 公開 API 路徑，不需要驗證
                         .requestMatchers(
                                 "/api/v1/auth/**",
                                 "/api/v1/perfumes/**",
@@ -49,11 +49,10 @@ public class WebSecurityConfiguration {
                                 "/img/**", "/static/**",
                                 "/auth/**", "/oauth2/**"
                         ).permitAll()
-                        // 其他所有請求需要身份驗證
                         .anyRequest().authenticated()
                 )
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 使用無狀態會話
-                .apply(jwtConfigurer); // 添加 JWT 配置
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .apply(jwtConfigurer);
         return http.build();
     }
 
@@ -70,7 +69,9 @@ public class WebSecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("http://" + hostname); // 替換為 hostname 或其他允許的來源
+
+        System.out.println("🚀 CORS 允許的 app_hostname: " + app_hostname); // 確認 hostname 是否正確
+        configuration.addAllowedOrigin("http://" + app_hostname); // 替換為 hostname 或其他允許的來源
         configuration.addAllowedMethod("HEAD");
         configuration.addAllowedMethod("OPTIONS");
         configuration.addAllowedMethod("GET");

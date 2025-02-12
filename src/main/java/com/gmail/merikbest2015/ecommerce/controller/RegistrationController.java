@@ -23,7 +23,7 @@ public class RegistrationController {
      * */
     @PostMapping
     public ResponseEntity<String> registration(@Valid @RequestBody RegistrationRequest user, BindingResult bindingResult) {
-        return ResponseEntity.ok(authenticationMapper.registerUser(user.getCaptcha(), user, bindingResult));
+        return ResponseEntity.ok(authenticationMapper.registerUser(user, bindingResult));
     }
 
     @GetMapping(ACTIVATE_CODE)

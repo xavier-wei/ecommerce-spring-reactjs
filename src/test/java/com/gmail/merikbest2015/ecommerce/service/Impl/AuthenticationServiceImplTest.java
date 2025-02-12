@@ -51,7 +51,7 @@ public class AuthenticationServiceImplTest {
     @MockBean
     private PasswordEncoder passwordEncoder;
 
-    @Value("${hostname}")
+    @Value("${app_hostname}")
     private String hostname;
 
     @Test

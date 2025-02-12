@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class MvcConfiguration implements WebMvcConfigurer {
 
-//    @Value("${hostname}")
+//    @Value("${app_hostname}")
 //    private String hostname;
 
     @Bean

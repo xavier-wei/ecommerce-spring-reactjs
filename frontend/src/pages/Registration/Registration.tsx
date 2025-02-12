@@ -38,7 +38,7 @@ const Registration: FC = (): ReactElement => {
     };
 
     const onClickSignIn = (userData: UserRegistration): void => {
-        dispatch(registration({ ...userData, captcha: captchaValue }));
+        dispatch(registration({ ...userData }));
         // @ts-ignore
         window.grecaptcha.reset();
     };
