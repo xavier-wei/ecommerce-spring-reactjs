@@ -1,7 +1,6 @@
 import React, { FC, ReactElement, useEffect, useState } from "react";
 import { Col, Divider, Form, Row } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import ReCAPTCHA from "react-google-recaptcha";
 import { LockOutlined, MailOutlined, UserAddOutlined, UserOutlined } from "@ant-design/icons";
 
 import { selectErrors, selectIsAuthLoading, selectIsRegistered } from "../../redux-toolkit/auth/auth-selector";
@@ -18,7 +17,6 @@ const Registration: FC = (): ReactElement => {
     const isRegistered = useSelector(selectIsRegistered);
     const isLoading = useSelector(selectIsAuthLoading);
     const errors = useSelector(selectErrors);
-    const [captchaValue, setCaptchaValue] = useState<string | null>("");
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -29,18 +27,9 @@ const Registration: FC = (): ReactElement => {
         };
     }, []);
 
-    useEffect(() => {
-        setCaptchaValue("");
-    }, [isRegistered]);
-
-    const onChangeRecaptcha = (token: string | null): void => {
-        setCaptchaValue(token);
-    };
 
     const onClickSignIn = (userData: UserRegistration): void => {
         dispatch(registration({ ...userData }));
-        // @ts-ignore
-        window.grecaptcha.reset();
     };
 
     return (
@@ -98,17 +87,6 @@ const Registration: FC = (): ReactElement => {
                             inputPassword
                         />
                         <IconButton disabled={isLoading} title={"Sign up"} icon={<UserAddOutlined />} />
-                        {/*<Form.Item*/}
-                        {/*    help={errors.captchaError}*/}
-                        {/*    validateStatus={errors.captchaError ? "error" : "validating"}*/}
-                        {/*    style={{ marginTop: 16 }}*/}
-                        {/*>*/}
-                        {/*    <ReCAPTCHA*/}
-                        {/*        onChange={onChangeRecaptcha}*/}
-                        {/*        // sitekey="6LcUqdMqAAAAAP97EVgU61VkK0BPR4w2KHFTUC2d"*/}
-                        {/*        sitekey="6Le6btQqAAAAADOqhs4ObNcKrCDztwBjgHDly6HM"*/}
-                        {/*    />*/}
-                        {/*</Form.Item>*/}
                     </Form>
                 </Col>
             </Row>
